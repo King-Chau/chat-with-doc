@@ -25,7 +25,7 @@ def get_vectorstore_from_url(url):
     document = loader.load()
     
     # split the document into chunks
-    text_splitter = RecursiveCharacterTextSplitter()
+    text_splitter = RecursiveCharacterTextSplitter(separators=["\n\n", "\n"])
     document_chunks = text_splitter.split_documents(document)
     
     # create a vectorstore from the chunks
