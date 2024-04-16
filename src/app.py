@@ -1,8 +1,9 @@
 # pip install streamlit langchain lanchain-openai beautifulsoup4 python-dotenv chromadb
 
 import streamlit as st
+import requests
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from langchain_community.document_loaders import WebBaseLoader
+from langchain_community.document_loaders import TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from dotenv import load_dotenv
@@ -15,8 +16,12 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGener
 load_dotenv()
 
 def get_vectorstore_from_url(url):
+    file_save = "file.txt"  # the name you want to save file as
+    resp = requests.get(url) # making requests to server
+    with open(file_save, "wb") as f:   # opening a file handler to create new file
+        f.write(resp.content)
     # get the text in document form
-    loader = WebBaseLoader(url)
+    loader = TextLoader(file_save)
     document = loader.load()
     
     # split the document into chunks
