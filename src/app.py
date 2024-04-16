@@ -27,6 +27,7 @@ def get_vectorstore_from_url(url):
     # split the document into chunks
     text_splitter = RecursiveCharacterTextSplitter(separators=["\n\n", "\n"])
     document_chunks = text_splitter.split_documents(document)
+    print(document_chunks)
     
     # create a vectorstore from the chunks
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
