@@ -68,28 +68,28 @@ def get_response(user_input):
     return response['answer']
 
 # app config
-st.set_page_config(page_title="网页内容问答", page_icon="🤖")
-st.title("网页内容问答")
+st.set_page_config(page_title="文档问答", page_icon="🤖")
+st.title("文档问答")
 
 # sidebar
 with st.sidebar:
     st.header("设置")
-    website_url = st.text_input("网页URL，例如：https://www.sohu.com/a/771769125_119038?scm=1102.xchannel:1649:110036.0.1.0~10007.8000.0.0.6634&spm=smpc.channel_114.block3_77_O0F7zf_1_fd.1.1713159411838W5agl8p_1524")
+    website_url = st.text_input("公网可访问的文件URL")
 
 if website_url is None or website_url == "":
-    st.info("仅供效果测试，请不要大量调用，谢谢！请在左侧输入网页URL，部分网站有反爬机制，请用搜狐新闻测试: https://www.sohu.com/")
+    st.info("仅供效果评测，请不要大量调用，谢谢！请在左侧输入文件URL")
 
 else:
     # session state
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = [
-            AIMessage(content="你好，我可以回答关于这个网页内容的问题"),
+            AIMessage(content="你好，请输入问题"),
         ]
     if "vector_store" not in st.session_state:
         st.session_state.vector_store = get_vectorstore_from_url(website_url)    
 
     # user input
-    user_query = st.chat_input("输入关于网页内容的问题...")
+    user_query = st.chat_input("输入关于文档的问题...")
     if user_query is not None and user_query != "":
         with st.spinner('处理中：' + user_query):
             response = get_response(user_query)
